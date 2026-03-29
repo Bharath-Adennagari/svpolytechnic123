@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SV Government Polytechnic College</title>
+    <link rel="stylesheet" href="/src/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Login Section -->
+      <section id="login-page" class="page active">
+        <div class="glass-container">
+          <div class="login-box">
+            <img src="https://img.icons8.com/fluency/96/university.png" alt="College Logo" class="logo">
+            <h1>SV Government Polytechnic</h1>
+            <form id="login-form">
+              <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter username" required>
+              </div>
+              <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+              </div>
+              <button type="submit" class="btn-primary">Login</button>
+              <p id="login-error" class="error-msg"></p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Home Section -->
+      <section id="home-page" class="page">
+        <div class="page-header">
+          <button class="back-btn" onclick="logout()">← Back</button>
+          <h1>Home</h1>
+        </div>
+        <div class="overlay">
+          <div class="content-center">
+            <h1 class="fade-in">Welcome to SV Government Polytechnic College</h1>
+            <p class="fade-in-delayed">Empowering Future Engineers</p>
+            <div class="button-group">
+              <button class="nav-btn" onclick="navigateTo('student-page')">
+                <img src="https://img.icons8.com/fluency/48/student-male.png" alt="Student">
+                <span>Student</span>
+              </button>
+              <button class="nav-btn" onclick="navigateTo('faculty-page')">
+                <img src="https://img.icons8.com/fluency/48/teacher.png" alt="Faculty">
+                <span>Faculty</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Student Section -->
+      <section id="student-page" class="page">
+        <div class="page-header">
+          <button class="back-btn" onclick="navigateTo('home-page')">← Back</button>
+          <h1>Student Details</h1>
+          <button class="btn-add" onclick="openStudentModal()">+ Add Student</button>
+        </div>
+        <div class="container">
+          <div class="year-selector">
+            <button class="year-btn active" onclick="loadStudentData(1)">1st Year</button>
+            <button class="year-btn" onclick="loadStudentData(2)">2nd Year</button>
+            <button class="year-btn" onclick="loadStudentData(3)">3rd Year</button>
+          </div>
+          <div class="table-container">
+            <table id="student-table">
+              <thead>
+                <tr>
+                  <th>Roll No</th>
+                  <th>Name</th>
+                  <th>Branch</th>
+                  <th>PIN</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="student-body">
+                <!-- Data will be injected here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Student Modal -->
+      <div id="student-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="modal-title">Add Student</h2>
+            <button class="close-modal" onclick="closeStudentModal()">&times;</button>
+          </div>
+          <form id="student-form">
+            <input type="hidden" id="edit-index">
+            <div class="input-group">
+              <label for="student-roll">Roll No</label>
+              <input type="text" id="student-roll" placeholder="e.g. 25018-CM-001" required>
+            </div>
+            <div class="input-group">
+              <label for="student-name">Name</label>
+              <input type="text" id="student-name" placeholder="Enter student name" required>
+            </div>
+            <div class="input-group">
+              <label for="student-branch">Branch</label>
+              <select id="student-branch" required>
+                <option value="">Select Branch</option>
+                <option value="CSE">CSE</option>
+                <option value="ECE">ECE</option>
+                <option value="MECH">MECH</option>
+                <option value="CIVIL">CIVIL</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="student-pin">PIN</label>
+              <input type="number" id="student-pin" placeholder="6-digit PIN" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn-secondary" onclick="closeStudentModal()">Cancel</button>
+              <button type="submit" class="btn-primary">Save Student</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Faculty Section -->
+      <section id="faculty-page" class="page">
+        <div class="page-header">
+          <button class="back-btn" onclick="navigateTo('home-page')">← Back</button>
+          <h1>Faculty Details</h1>
+          <button class="btn-add" onclick="openFacultyModal()">+ Add Faculty</button>
+        </div>
+        <div class="container">
+          <div class="table-container">
+            <table id="faculty-table">
+              <thead>
+                <tr>
+                  <th>Faculty Name</th>
+                  <th>Subject</th>
+                  <th>Phone Number</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="faculty-body">
+                <!-- Data will be injected here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Faculty Modal -->
+      <div id="faculty-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="faculty-modal-title">Add Faculty</h2>
+            <button class="close-modal" onclick="closeFacultyModal()">&times;</button>
+          </div>
+          <form id="faculty-form">
+            <input type="hidden" id="faculty-edit-index">
+            <div class="input-group">
+              <label for="faculty-name">Faculty Name</label>
+              <input type="text" id="faculty-name-input" placeholder="Enter faculty name" required>
+            </div>
+            <div class="input-group">
+              <label for="faculty-subject">Subject</label>
+              <input type="text" id="faculty-subject-input" placeholder="Enter subject" required>
+            </div>
+            <div class="input-group">
+              <label for="faculty-phone">Phone Number</label>
+              <input type="text" id="faculty-phone-input" placeholder="Enter phone number" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn-secondary" onclick="closeFacultyModal()">Cancel</button>
+              <button type="submit" class="btn-primary">Save Faculty</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Confirmation Modal -->
+      <div id="confirm-modal" class="modal">
+        <div class="modal-content confirm-box">
+          <h2>Are you sure?</h2>
+          <p id="confirm-message">Do you really want to delete this item?</p>
+          <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeConfirmModal()">Cancel</button>
+            <button id="confirm-yes" class="btn-delete">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/script.js"></script>
+  </body>
+</html>
+
